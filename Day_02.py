@@ -19,12 +19,29 @@ def run_program(program):
     return program[0]
 
 
-filename = 'Day_02_data.txt'
-with open(filename, 'r') as f:
-    program = [int(x) for x in f.read().strip().split(',')]
-print(program)
-# todo mod program prior
-result = run_program(program)
+def load_puzzle_data():
+    filename = 'Day_02_data.txt'
+    with open(filename, 'r') as f:
+        program = [int(x) for x in f.read().strip().split(',')]
+    return program
+
+
+def scan_nouns_and_verbs():
+    for noun in range(100):
+        for verb in range(100):
+            program = load_puzzle_data()
+            # Mod program
+            program[1] = noun
+            program[2] = verb
+            run_program(program)
+            if program[0] == 19690720:
+                return noun, verb
+    return None
+
+noun, verb = scan_nouns_and_verbs()
+print(f'noun {noun}  verb {verb}  answer {100 * noun + verb}')
+
+
 
 
 class TestProgram(unittest.TestCase):
