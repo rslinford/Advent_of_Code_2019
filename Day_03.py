@@ -1,3 +1,6 @@
+import time
+
+
 def read_puzzle_data(filename):
     with open(filename, 'r') as f:
         path_a, path_b = f.read().strip().split('\n')
@@ -45,8 +48,13 @@ def trace_path(path):
 
 def find_all_intersections(a, b):
     # scan for points in common
+    start_time = time.time()
     rval = []
-    for p1 in a:
+    print(f'Scanning a {len(a)} X  b {len(a)} -> {len(a) * len(b)}')
+    for i, p1 in enumerate(a):
+        if i % 1000 == 0:
+            elapsed_minutes = int((time.time() - start_time) / 1000 * 60)
+            print(f'{i} -> {len(a)}  Elapsed minutes {elapsed_minutes}')
         for p2 in b:
             if p1 == p2:
                 rval.append(p1)
